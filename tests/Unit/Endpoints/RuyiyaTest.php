@@ -15,6 +15,6 @@ class RuyiyaTest extends TestCase
 
         $result = $analyzer->analyze($html);
 
-        $this->assertTrue(true);
+        $this->assertTrue(is_array($result) && !empty($result));
     }
 }

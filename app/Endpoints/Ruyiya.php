@@ -10,6 +10,7 @@ class Ruyiya extends HtmlParser
     const URL    = 'https://ruyiya.shop2000.com.tw';
     const URI    = 'https://ruyiya.shop2000.com.tw/product/kw={search_text}';
     const METHOD = 'GET';
+    const NAME   = 'Ruyiya';
 
     public function generateRequest(string $searchText): Request
     {
@@ -43,30 +44,26 @@ class Ruyiya extends HtmlParser
 
     protected function findResources(string $html)
     {
-        $pattern = $this->tagPattern(
-            'td',
-            [],
+        $pattern =$this->concat(
             $this->tagPattern(
-                'table',
-                ['class' => 'p_tb'],
-                self::PREG_ANY_CHARS . '(?>\<(?!\/table\>)[^\<]*)*'
+                'td',
+                [],
+                $this->tagPattern('table', ['class' => 'p_tb'], ''),
+                false,
+                true
             ),
-            true
-        );
-        $pattern .= $this->tagPattern(
-            'td',
-            [],
             $this->tagPattern(
-                'ul',
-                ['class' => 'p_ul'],
-                self::PREG_ANY_CHARS . '(?>\<(?!\/ul\>)[^\<]*)*'
-            ) . "(?:" . $this->tagPattern(
-                'div',
-                ['class' => 'pd_l'],
-                self::PREG_ANY_CHARS . '(?>\<(?!\/div\>)[^\<]*)*'
-            ) . ")?",
-            true,
-            );
+                'td',
+                [],
+                $this->concat(
+                    $this->tagPattern('ul', ['class' => 'p_ul'], '') ,
+                    "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?",
+                ),
+                false,
+                true
+            )
+        );
+
         preg_match_all(self::DELIMITER . $pattern . self::DELIMITER . 'is', $html, $matches);
 
         return $matches[0];
@@ -91,9 +88,7 @@ class Ruyiya extends HtmlParser
      */
     protected function findItemAndUrl(string $resource): array
     {
-        $pattern = $this->tagPattern('li', [],
-            $this->tagPattern('a', ['href' => '(\/product\/p\d+)'], '&nbsp;(' . self::PREG_ANY_CHARS . ')')
-        );
+        $pattern = $this->tagPattern('a', ['href' => '(\/product\/p\d+)'], '', false);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 
@@ -106,8 +101,7 @@ class Ruyiya extends HtmlParser
 
     protected function findNote(string $resource)
     {
-        $pattern = $this->tagPattern('div', ['class' => 'pd_l'],
-            '(' . self::PREG_ANY_CHARS . '(?>\<(?!\/div\>)[^\<]*)*)');
+        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '', true);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 

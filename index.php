@@ -15,9 +15,14 @@ if (empty($_GET['items'])) {
 try {
     $controller = new App\AppController();
     $searchText = $_GET['items'];
-    $controller->addEndpoint(new App\Endpoints\Ruyiya());
-    $controller->addEndpoint(new App\Endpoints\NailJapan());
-    $controller->addEndpoint(new App\Endpoints\NailsInJapan());
+//    $controller->addEndpoint(new App\Endpoints\Ruyiya());
+//    $controller->addEndpoint(new App\Endpoints\NailJapan());
+//    $controller->addEndpoint(new App\Endpoints\NailsInJapan());
+//    $controller->addEndpoint(new App\Endpoints\NailLabo());
+//    $controller->addEndpoint(new App\Endpoints\HcNails());
+//    $controller->addEndpoint(new App\Endpoints\Nail711());
+//    $controller->addEndpoint(new App\Endpoints\Shop3388776());
+    $controller->addEndpoint(new App\Endpoints\ShenlyForYou());
     $result = $controller->searchItems($searchText);
 
     include 'viewer.php';

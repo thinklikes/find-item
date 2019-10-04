@@ -5,12 +5,12 @@ namespace App\Endpoints;
 
 use GuzzleHttp\Psr7\Request;
 
-class NailJapan extends HtmlParser
+class HcNails extends HtmlParser
 {
-    const URL    = 'https://nailjapan.shop2000.com.tw';
-    const URI    = 'https://nailjapan.shop2000.com.tw/product/kw={search_text}';
+    const URL    = 'https://www.hcnails.com/ecommerce/';
+    const URI    = 'https://www.hcnails.com/ecommerce/catalogsearch/result/index/?limit=100&mode=list&q={search_text}';
     const METHOD = 'GET';
-    const NAME   = '米奇小姐在東京';
+    const NAME   = '康盟國際';
 
     public function generateRequest(string $searchText): Request
     {
@@ -45,9 +45,19 @@ class NailJapan extends HtmlParser
     protected function findResources(string $html)
     {
         $pattern = $this->concat(
-            $this->tagPattern('table', ['class' => 'p_tb'], ''),
-            $this->tagPattern('ul', ['class' => 'p_ul'], ''),
-            "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?"
+            $this->tagPattern('a', [], ''),
+            '<div class="product-shop">',
+            '<div class="f-fix">',
+            $this->tagPattern('div', ['class' => 'product-primary']),
+            $this->tagPattern(
+                'div',
+                ['class' => 'product-secondary'],
+                $this->tagPattern('div', ['class' => 'price-box']),
+                false
+            ),
+            $this->tagPattern('div', ['class' => 'product-secondary']),
+            $this->tagPattern('div', ['class' => 'desc std'])
+
         );
 
         preg_match_all(self::DELIMITER . $pattern . self::DELIMITER . 'is', $html, $matches);
@@ -74,10 +84,15 @@ class NailJapan extends HtmlParser
      */
     protected function findItemAndUrl(string $resource): array
     {
-        $pattern = $this->tagPattern('a', ['href' => '(\/product\/p\d+)'], '', false);
-
+        $pattern = $this->tagPattern(
+            'h2',
+            ['class' => 'product-name'],
+            $this->tagPattern('a', ['href' => preg_quote(self::URL, self::DELIMITER) . '([^<>"\']*\.html)'], '', false),
+            false
+        );
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 
+        array_shift($matches);
         array_shift($matches);
 
         return $matches ?: [];
@@ -87,7 +102,7 @@ class NailJapan extends HtmlParser
 
     protected function findNote(string $resource)
     {
-        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '');
+        $pattern = $this->tagPattern('div', ['class' => 'desc std']);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 

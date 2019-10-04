@@ -5,12 +5,12 @@ namespace App\Endpoints;
 
 use GuzzleHttp\Psr7\Request;
 
-class NailJapan extends HtmlParser
+class Shop3388776 extends HtmlParser
 {
-    const URL    = 'https://nailjapan.shop2000.com.tw';
-    const URI    = 'https://nailjapan.shop2000.com.tw/product/kw={search_text}';
+    const URL    = 'https://www.shop2000.com.tw/3388776';
+    const URI    = 'https://www.shop2000.com.tw/3388776/product/kw={search_text}';
     const METHOD = 'GET';
-    const NAME   = '米奇小姐在東京';
+    const NAME   = '晶彩殿堂';
 
     public function generateRequest(string $searchText): Request
     {
@@ -46,8 +46,8 @@ class NailJapan extends HtmlParser
     {
         $pattern = $this->concat(
             $this->tagPattern('table', ['class' => 'p_tb'], ''),
-            $this->tagPattern('ul', ['class' => 'p_ul'], ''),
-            "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?"
+            $this->tagPattern('ul', ['class' => 'p_ul'], '') ,
+            "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?",
         );
 
         preg_match_all(self::DELIMITER . $pattern . self::DELIMITER . 'is', $html, $matches);
@@ -74,7 +74,7 @@ class NailJapan extends HtmlParser
      */
     protected function findItemAndUrl(string $resource): array
     {
-        $pattern = $this->tagPattern('a', ['href' => '(\/product\/p\d+)'], '', false);
+        $pattern = $this->tagPattern('a', ['href' => '(\/3388776\/product\/p\d+)'], '', false);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 
@@ -87,7 +87,7 @@ class NailJapan extends HtmlParser
 
     protected function findNote(string $resource)
     {
-        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '');
+        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '', true);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 

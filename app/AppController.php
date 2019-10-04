@@ -6,10 +6,8 @@ namespace App;
 
 use App\Endpoints\Endpoint;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\ResponseInterface;
 
 class AppController
 {
@@ -40,11 +38,11 @@ class AppController
         $pool = new Pool($client, $requests(), [
             'concurrency' => 5,
             'options' => [
-                'delay' => 300
+                'delay' => 500
             ],
             'fulfilled' => function (Response $response, $index) use (&$result) {
                 $contents = $response->getBody()->getContents();
-                $result[get_class($this->endpoints[$index])] = $this->endpoints[$index]->analyze($contents);
+                $result[$this->endpoints[$index]::NAME] = $this->endpoints[$index]->analyze($contents);
             },
             'rejected' => function ($reason, $index) {
                 var_dump($reason->getFile());

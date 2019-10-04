@@ -13,8 +13,8 @@ class NailJapanTest extends TestCase
         $analyzer = new NailJapan();
         $html = file_get_contents(__DIR__ . '/../../../storage/nailjapan.html');
 
-        $analyzer->analyze($html);
+        $result = $analyzer->analyze($html);
 
-        $this->assertTrue(true);
+        $this->assertTrue(is_array($result) && !empty($result));
     }
 }

@@ -5,12 +5,12 @@ namespace App\Endpoints;
 
 use GuzzleHttp\Psr7\Request;
 
-class NailJapan extends HtmlParser
+class ShenlyForYou extends HtmlParser
 {
-    const URL    = 'https://nailjapan.shop2000.com.tw';
-    const URI    = 'https://nailjapan.shop2000.com.tw/product/kw={search_text}';
+    const URL    = 'https://shenly.shop2000.com.tw/';
+    const URI    = 'https://shenly.shop2000.com.tw/product/kw={search_text}';
     const METHOD = 'GET';
-    const NAME   = '米奇小姐在東京';
+    const NAME   = 'SHENLY 鑫儷';
 
     public function generateRequest(string $searchText): Request
     {
@@ -45,9 +45,12 @@ class NailJapan extends HtmlParser
     protected function findResources(string $html)
     {
         $pattern = $this->concat(
-            $this->tagPattern('table', ['class' => 'p_tb'], ''),
             $this->tagPattern('ul', ['class' => 'p_ul'], ''),
-            "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?"
+            '<tr>',
+            '<td width=\'10%\' >',
+            $this->tagPattern('table', ['class' => 'p_tb'], ''),
+            '<td>',
+            "(?:" . $this->tagPattern('div', ['class' => 'pd_l'], '') . ")?",
         );
 
         preg_match_all(self::DELIMITER . $pattern . self::DELIMITER . 'is', $html, $matches);
@@ -87,7 +90,7 @@ class NailJapan extends HtmlParser
 
     protected function findNote(string $resource)
     {
-        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '');
+        $pattern = $this->tagPattern('div', ['class' => 'pd_l'], '', true);
 
         preg_match(self::DELIMITER . $pattern . self::DELIMITER . 'is', $resource, $matches);
 
