@@ -13,7 +13,7 @@ class ShenlyForYouTest extends TestCase
     public function testAnalyze()
     {
         $analyzer = new ShenlyForYou();
-        $html = file_get_contents(__DIR__ . '/../../../storage/shenlyforyou.html');
+        $html = file_get_contents(__DIR__ . '/../../html/shenlyforyou.html');
 
         $result = $analyzer->analyze($html);
 

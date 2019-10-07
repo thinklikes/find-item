@@ -22,7 +22,11 @@ try {
 //    $controller->addEndpoint(new App\Endpoints\HcNails());
 //    $controller->addEndpoint(new App\Endpoints\Nail711());
 //    $controller->addEndpoint(new App\Endpoints\Shop3388776());
-    $controller->addEndpoint(new App\Endpoints\ShenlyForYou());
+//    $controller->addEndpoint(new App\Endpoints\ShenlyForYou());
+//    $controller->addEndpoint(new App\Endpoints\NailLaVie());
+//    $controller->addEndpoint(new App\Endpoints\OnsNail());
+//    $controller->addEndpoint(new App\Endpoints\HikariIntl());
+    $controller->addEndpoint(new App\Endpoints\OstarNails());
     $result = $controller->searchItems($searchText);
 
     include 'viewer.php';

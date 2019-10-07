@@ -2,16 +2,16 @@
 
 namespace Tests\Unit\Endpoints;
 
-use App\Endpoints\Nail711;
+use App\Endpoints\OnsNail;
 use PHPUnit\Framework\TestCase;
 
-class Nail711Test extends TestCase
+class OnsNailTest extends TestCase
 {
 
     public function testAnalyze()
     {
-        $analyzer = new Nail711();
-        $html = file_get_contents(__DIR__ . '/../../html/nail711.html');
+        $analyzer = new OnsNail();
+        $html = file_get_contents(__DIR__ . '/../../html/onsnail.html');
 
         $result = $analyzer->analyze($html);
 

@@ -5,13 +5,13 @@ namespace Tests\Unit\Endpoints;
 use App\Endpoints\NailLabo;
 use PHPUnit\Framework\TestCase;
 
-class RuyiyaTest extends TestCase
+class NailLaboTest extends TestCase
 {
 
     public function testAnalyze()
     {
         $analyzer = new NailLabo();
-        $html = file_get_contents(__DIR__ . '/../../../storage/naillabo.html');
+        $html = file_get_contents(__DIR__ . '/../../html/naillabo.html');
 
         $result = $analyzer->analyze($html);
 

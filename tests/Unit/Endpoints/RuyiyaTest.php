@@ -11,7 +11,7 @@ class RuyiyaTest extends TestCase
     public function testAnalyze()
     {
         $analyzer = new Ruyiya();
-        $html = file_get_contents(__DIR__ . '/../../../storage/ruyiya.html');
+        $html = file_get_contents(__DIR__ . '/../../html/ruyiya.html');
 
         $result = $analyzer->analyze($html);
 

@@ -11,7 +11,7 @@ class NailsInJapanTest extends TestCase
     public function testAnalyze()
     {
         $analyzer = new NailsInJapan();
-        $html = file_get_contents(__DIR__ . '/../../../storage/nailsinjapan.html');
+        $html = file_get_contents(__DIR__ . '/../../html/nailsinjapan.html');
 
         $result = $analyzer->analyze($html);
 
