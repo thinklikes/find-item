@@ -17,7 +17,7 @@ class OstarNails implements Endpoint
         return new Request(
             self::METHOD,
             str_replace('{search_text}', $searchText, self::URI),
-            ['Content-Type' => 'application/json'],
+            ['Content-Type' => 'application/json']
         );
     }
 

@@ -16,8 +16,8 @@ class Shop3388776 extends HtmlParser
     {
         return new Request(
             self::METHOD,
-            str_replace('{search_text}', htmlentities($searchText), self::URI),
-            );
+            str_replace('{search_text}', htmlentities($searchText), self::URI)
+        );
     }
 
     /**

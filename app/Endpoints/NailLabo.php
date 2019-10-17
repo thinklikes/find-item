@@ -19,7 +19,7 @@ class NailLabo implements Endpoint
             self::METHOD,
             self::URI,
             ['Content-Type' => 'application/json'],
-            str_replace('{search_text}', $searchText, self::BODY),
+            str_replace('{search_text}', $searchText, self::BODY)
         );
     }
 

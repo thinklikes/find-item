@@ -16,8 +16,8 @@ class NailsInJapan extends HtmlParser
     {
         return new Request(
             self::METHOD,
-            str_replace('{search_text}', htmlentities($searchText), self::URI),
-            );
+            str_replace('{search_text}', htmlentities($searchText), self::URI)
+        );
     }
 
     /**

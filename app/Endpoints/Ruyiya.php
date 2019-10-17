@@ -14,10 +14,9 @@ class Ruyiya extends HtmlParser
 
     public function generateRequest(string $searchText): Request
     {
-        return new Request(
-            self::METHOD,
-            str_replace('{search_text}', htmlentities($searchText), self::URI),
-            );
+        return new Request(self::METHOD,
+            str_replace('{search_text}', htmlentities($searchText), self::URI)
+        );
     }
 
     /**

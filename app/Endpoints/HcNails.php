@@ -16,8 +16,8 @@ class HcNails extends HtmlParser
     {
         return new Request(
             self::METHOD,
-            str_replace('{search_text}', htmlentities($searchText), self::URI),
-            );
+            str_replace('{search_text}', htmlentities($searchText), self::URI)
+        );
     }
 
     /**
@@ -57,7 +57,6 @@ class HcNails extends HtmlParser
             ),
             $this->tagPattern('div', ['class' => 'product-secondary']),
             $this->tagPattern('div', ['class' => 'desc std'])
-
         );
 
         preg_match_all(self::DELIMITER . $pattern . self::DELIMITER . 'is', $html, $matches);
